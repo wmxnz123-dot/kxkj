@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自有数据-上传/编辑</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background-color: #f3f4f6; }
+    .mobile-view { max-width: 390px; margin: 0 auto; background-color: #f8fafc; min-height: 100vh; position: relative; padding-bottom: 92px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <div class="mobile-view">
+    <div class="bg-white px-4 py-4 border-b border-gray-100 sticky top-0 z-10">
+      <div class="flex items-center justify-between">
+        <a href="app_upload_list.html" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-700">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="text-base font-semibold text-gray-900">上传/编辑自有数据</div>
+        <a href="./index.html" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-700">
+          <i class="fa-solid fa-grid-2"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="px-4 mt-4 space-y-3">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="text-sm font-bold text-gray-900">选择目录与模板</div>
+        <div class="mt-3">
+          <label class="text-xs text-gray-500">目录</label>
+          <select class="mt-2 w-full bg-white border border-gray-300 rounded-xl px-3 py-3 text-sm outline-none focus:border-blue-500 text-gray-700">
+            <option>证明材料</option>
+            <option>身份资料</option>
+            <option>教育证书</option>
+          </select>
+        </div>
+        <div class="mt-4">
+          <label class="text-xs text-gray-500">模板</label>
+          <select class="mt-2 w-full bg-white border border-gray-300 rounded-xl px-3 py-3 text-sm outline-none focus:border-blue-500 text-gray-700">
+            <option>通用证明材料（含附件）</option>
+            <option>证件资料（含有效期）</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="text-sm font-bold text-gray-900">模板字段</div>
+        <div class="mt-3">
+          <label class="text-xs text-gray-500">标题（必填）</label>
+          <input id="formTitle" class="mt-2 w-full bg-white border border-gray-300 rounded-xl px-3 py-3 text-sm outline-none focus:border-blue-500 transition-colors" placeholder="例如：手机号变更证明">
+        </div>
+        <div class="mt-4">
+          <label class="text-xs text-gray-500">证明类型</label>
+          <select id="formType" class="mt-2 w-full bg-white border border-gray-300 rounded-xl px-3 py-3 text-sm outline-none focus:border-blue-500 text-gray-700 transition-colors">
+            <option>运营商截图</option>
+            <option>单位证明</option>
+            <option>其他</option>
+          </select>
+        </div>
+        <div class="mt-4">
+          <label class="text-xs text-gray-500">备注（可选）</label>
+          <textarea id="formDesc" class="mt-2 w-full bg-white border border-gray-300 rounded-xl px-3 py-3 text-sm outline-none focus:border-blue-500 transition-colors" rows="3" placeholder="补充说明，用于后续检索与关联事项"></textarea>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="flex items-center justify-between">
+          <div class="text-sm font-bold text-gray-900">上传附件</div>
+          <span class="text-xs text-gray-400">支持 PDF/图片，自动提取</span>
+        </div>
+        <div class="mt-3 grid grid-cols-3 gap-3">
+          <div class="aspect-square rounded-xl bg-gray-50 border border-gray-200 flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-100 transition" onclick="simulateAIUpload()">
+            <i class="fa-solid fa-plus text-lg"></i>
+            <div class="text-[10px] mt-2">添加</div>
+          </div>
+          <!-- Uploaded PDF Icon (Hidden by default) -->
+          <div id="uploadedPdf" class="hidden aspect-square rounded-xl bg-red-50 border border-red-100 flex flex-col items-center justify-center text-red-500 relative">
+              <i class="fa-solid fa-file-pdf text-2xl"></i>
+              <div class="text-[10px] mt-2 truncate w-full px-2 text-center">体检报告.pdf</div>
+              <div class="absolute -top-1 -right-1 bg-green-500 text-white text-[8px] px-1 rounded">已识别</div>
+          </div>
+          <div class="aspect-square rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-400">
+            <div class="text-xs">空位</div>
+          </div>
+        </div>
+        <div class="mt-3 text-xs text-gray-500 leading-relaxed">
+          上传成功后，可在自有数据列表中查看、下载与删除。也可作为纠错证明材料引用。
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Extraction Notification (Hidden by default) -->
+    <div id="aiExtractNotice" class="hidden fixed top-16 left-1/2 -translate-x-1/2 w-[90%] max-w-[350px] bg-white rounded-lg shadow-lg border-l-4 border-blue-500 p-4 z-50">
+        <div class="flex items-start">
+            <i class="fa-solid fa-sparkles text-blue-500 mt-0.5 mr-3"></i>
+            <div>
+                <h4 class="text-sm font-bold text-gray-800 mb-1">AI 智能提取成功</h4>
+                <p class="text-xs text-gray-600 mb-2">已从“体检报告.pdf”中提取关键信息并自动填充表单。</p>
+                <button class="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded border border-blue-100" onclick="document.getElementById('aiExtractNotice').classList.add('hidden')">查看填充结果</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0">
+      <div class="max-w-[390px] mx-auto bg-white border-t border-gray-200 px-4 py-3">
+        <a href="./app_upload_list.html" class="block text-center text-sm font-semibold text-white bg-green-600 rounded-xl py-3">提交上传</a>
+        <div class="mt-2 text-[11px] text-gray-500 text-center">提交后将进入自有数据管理</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      function simulateAIUpload() {
+          // Show PDF icon
+          document.getElementById('uploadedPdf').classList.remove('hidden');
+          
+          // Simulate AI extraction delay
+          setTimeout(() => {
+              // Show notice
+              document.getElementById('aiExtractNotice').classList.remove('hidden');
+              
+              // Fill form fields with animation
+              const title = document.getElementById('formTitle');
+              const type = document.getElementById('formType');
+              const desc = document.getElementById('formDesc');
+              
+              title.value = "2025年度员工健康体检报告";
+              title.classList.add('bg-blue-50', 'border-blue-300');
+              
+              type.value = "其他";
+              type.classList.add('bg-blue-50', 'border-blue-300');
+              
+              desc.value = "AI自动提取：体检机构：潍坊市人民医院。总检结论：身体健康，各项指标正常。";
+              desc.classList.add('bg-blue-50', 'border-blue-300');
+
+              // Remove highlight after 3 seconds
+              setTimeout(() => {
+                  title.classList.remove('bg-blue-50', 'border-blue-300');
+                  type.classList.remove('bg-blue-50', 'border-blue-300');
+                  desc.classList.remove('bg-blue-50', 'border-blue-300');
+              }, 3000);
+          }, 1500);
+      }
+  </script>
+</body>
+</html>
+

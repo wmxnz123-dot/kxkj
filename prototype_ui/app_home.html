@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人专属数据空间App - 首页原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f4f6; }
+        .mobile-view { max-width: 390px; margin: 0 auto; background-color: #f8fafc; min-height: 100vh; position: relative; padding-bottom: 70px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .bg-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+    </style>
+</head>
+<body>
+<div class="mobile-view">
+    <!-- Header -->
+    <div class="bg-gradient text-white p-5 pb-16 rounded-b-3xl shadow-md">
+        <div class="flex justify-between items-center mb-4">
+            <div class="text-xl font-bold tracking-wider">张三的个人专属数据空间</div>
+            <a href="app_messages.html" class="relative">
+                <i class="fa-regular fa-bell text-xl"></i>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </a>
+        </div>
+        <p class="text-sm text-blue-100 opacity-90 mb-4">安全 · 便捷 · 自主管理</p>
+        
+        <!-- AI Assistant Banner -->
+        <a href="app_ai_chat.html" class="block bg-white/20 hover:bg-white/30 transition border border-white/30 rounded-xl p-3 backdrop-blur-sm relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3 shrink-0 relative z-10">
+                    <i class="fa-solid fa-robot text-blue-600 text-lg"></i>
+                </div>
+                <div class="relative z-10">
+                    <div class="text-sm font-bold text-white flex items-center">
+                        AI 智能助理 <span class="bg-gradient-to-r from-purple-400 to-pink-400 text-[10px] px-1.5 py-0.5 rounded ml-2">Beta</span>
+                    </div>
+                    <div class="text-xs text-blue-50 mt-0.5">向我提问，或让我帮你一键生成简历...</div>
+                </div>
+            </div>
+            <!-- decorative circles -->
+            <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full blur-sm"></div>
+            <div class="absolute right-8 -top-4 w-12 h-12 bg-white/10 rounded-full blur-sm"></div>
+        </a>
+    </div>
+
+    <!-- Data Overview Card -->
+    <div class="px-4 -mt-10 relative z-10">
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-bold text-gray-800 text-lg">我的数据资产</h3>
+                <span class="text-xs text-blue-500 bg-blue-50 px-2 py-1 rounded-full"><i class="fa-solid fa-shield-check mr-1"></i>已加密保护</span>
+            </div>
+            <div class="grid grid-cols-4 gap-2 text-center">
+                <div>
+                    <div class="text-xl font-bold text-blue-600 mb-1">45<span class="text-[10px] font-normal text-gray-500 ml-0.5">个</span></div>
+                    <div class="text-xs text-gray-500">我的数据</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-green-500 mb-1">12<span class="text-[10px] font-normal text-gray-500 ml-0.5">个</span></div>
+                    <div class="text-xs text-gray-500">自有数据</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-purple-500 mb-1">8<span class="text-[10px] font-normal text-gray-500 ml-0.5">次</span></div>
+                    <div class="text-xs text-gray-500">使用记录</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-orange-500 mb-1">5<span class="text-[10px] font-normal text-gray-500 ml-0.5">个</span></div>
+                    <div class="text-xs text-gray-500">我的服务</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions 1 (Modern Grid Style) -->
+    <div class="px-4 mt-6">
+        <div class="grid grid-cols-2 gap-3">
+            <a href="app_my_data.html?tab=claimed" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition">
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">我的数据</h4>
+                    <p class="text-[10px] text-gray-500">查看已认领资产</p>
+                </div>
+                <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+            </a>
+            <a href="app_my_data.html?tab=unclaimed" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition relative">
+                <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-bl-lg rounded-tr-xl">3 待办</span>
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">数据认领</h4>
+                    <p class="text-[10px] text-gray-500">有新数据待认领</p>
+                </div>
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-download"></i>
+                </div>
+            </a>
+            <a href="app_upload_list.html" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition">
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">自有数据</h4>
+                    <p class="text-[10px] text-gray-500">上传个人补充材料</p>
+                </div>
+                <div class="w-10 h-10 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-upload"></i>
+                </div>
+            </a>
+            <a href="app_my_auth.html?tab=pending" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition relative">
+                <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-bl-lg rounded-tr-xl">2 请求</span>
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">个人授权</h4>
+                    <p class="text-[10px] text-gray-500">管理数据授权</p>
+                </div>
+                <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Actions 2 (Category Services) -->
+    <div class="px-4 mt-6">
+        <h3 class="font-bold text-gray-800 mb-3">应用服务</h3>
+        <div class="grid grid-cols-4 gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="text-xs text-gray-600">教育信息</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <span class="text-xs text-gray-600">就业信息</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <span class="text-xs text-gray-600">健康信息</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <span class="text-xs text-gray-600">资产信息</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-car"></i>
+                </div>
+                <span class="text-xs text-gray-600">交通出行</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-house-chimney"></i>
+                </div>
+                <span class="text-xs text-gray-600">不动产</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-file-contract"></i>
+                </div>
+                <span class="text-xs text-gray-600">电子合同</span>
+            </a>
+            <a href="#" class="flex flex-col items-center">
+                <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-full flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <span class="text-xs text-gray-600">更多服务</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Bottom Tab Bar -->
+    <div class="fixed bottom-0 left-0 w-full flex justify-center z-50 pointer-events-none">
+        <div class="w-full max-w-[390px] bg-white border-t border-gray-200 flex justify-around py-2 pointer-events-auto shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+            <a href="app_home.html" class="flex flex-col items-center text-blue-600 w-1/2">
+                <i class="fa-solid fa-house text-xl mb-1"></i>
+                <span class="text-[10px]">首页</span>
+            </a>
+            <a href="app_profile.html" class="flex flex-col items-center text-gray-400 hover:text-blue-600 w-1/2 border-l border-gray-100">
+                <i class="fa-solid fa-user text-xl mb-1"></i>
+                <span class="text-[10px]">我的</span>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

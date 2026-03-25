@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人专属数据空间App - 我的数据</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f4f6; }
+        .mobile-view { max-width: 390px; margin: 0 auto; background-color: #f8fafc; min-height: 100vh; position: relative; padding-bottom: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .tab-active { color: #2563eb; border-bottom: 2px solid #2563eb; font-weight: bold; }
+        .tab-inactive { color: #6b7280; border-bottom: 2px solid transparent; }
+    </style>
+</head>
+<body>
+<div class="mobile-view">
+    <!-- Topbar -->
+    <div class="bg-white px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-50">
+        <a href="app_home.html" class="text-gray-600"><i class="fa-solid fa-angle-left text-xl"></i></a>
+        <h1 class="text-lg font-bold text-gray-800">我的数据</h1>
+        <div class="w-6"></div> <!-- Placeholder for alignment -->
+    </div>
+
+    <!-- Tabs -->
+    <div class="bg-white flex border-b border-gray-200 sticky top-[52px] z-40">
+        <button id="tabClaimed" class="flex-1 py-3 text-sm text-center tab-active transition" onclick="switchTab('claimed')">
+            已认领的数据目录
+        </button>
+        <button id="tabUnclaimed" class="flex-1 py-3 text-sm text-center tab-inactive transition relative" onclick="switchTab('unclaimed')">
+            未认领的数据
+            <span class="absolute top-2 right-6 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="bg-white px-4 py-3 sticky top-[99px] z-30 shadow-sm">
+        <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+            <input type="text" placeholder="搜索数据目录名称" class="w-full bg-gray-100 text-sm rounded-full pl-9 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 transition">
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="p-4">
+        <!-- Tab 1 Content: 已认领的数据 -->
+        <div id="contentClaimed" class="space-y-4 block">
+            <!-- Item 1 -->
+            <a href="app_face_auth.html?target=app_item_detail.html" class="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-address-card text-blue-500 text-xl mr-3"></i>
+                        <h3 class="font-bold text-gray-800">基础身份信息</h3>
+                    </div>
+                    <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-full border border-green-100">已认领</span>
+                </div>
+                <div class="text-sm text-gray-500 ml-8 mb-2">包含：姓名、身份证号、户籍地址等</div>
+                <div class="text-xs text-gray-400 ml-8">认领时间：2023-10-01 10:20</div>
+            </a>
+            
+            <!-- Item 2 -->
+            <a href="app_face_auth.html?target=app_item_detail.html" class="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-shield-heart text-blue-400 text-xl mr-3"></i>
+                        <h3 class="font-bold text-gray-800">社保信息</h3>
+                    </div>
+                    <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-full border border-green-100">已认领</span>
+                </div>
+                <div class="text-sm text-gray-500 ml-8 mb-2">包含：参保状态、缴费基数、累计月数等</div>
+                <div class="text-xs text-gray-400 ml-8">认领时间：2023-10-05 14:30</div>
+            </a>
+
+            <!-- Item 3 -->
+            <a href="app_face_auth.html?target=app_item_detail.html" class="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-graduation-cap text-indigo-500 text-xl mr-3"></i>
+                        <h3 class="font-bold text-gray-800">学历学籍信息</h3>
+                    </div>
+                    <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-full border border-green-100">已认领</span>
+                </div>
+                <div class="text-sm text-gray-500 ml-8 mb-2">包含：毕业院校、学历层次、学位等</div>
+                <div class="text-xs text-gray-400 ml-8">认领时间：2023-10-10 09:15</div>
+            </a>
+        </div>
+
+        <!-- Tab 2 Content: 未认领的数据 -->
+        <div id="contentUnclaimed" class="space-y-4 hidden">
+            <!-- Info Banner -->
+            <div class="bg-blue-50 text-blue-600 text-xs p-3 rounded-lg flex items-start">
+                <i class="fa-solid fa-circle-info mt-0.5 mr-2"></i>
+                <p>平台为您匹配到以下数据，核对无误后请及时认领。认领后可用于授权或业务办理。</p>
+            </div>
+
+            <!-- Item 1 -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-building-columns text-yellow-500 text-xl mr-3"></i>
+                        <h3 class="font-bold text-gray-800">公积金账户信息</h3>
+                    </div>
+                    <span class="bg-red-50 text-red-500 text-xs px-2 py-1 rounded border border-red-100">待认领</span>
+                </div>
+                <div class="text-sm text-gray-600 mb-4 bg-gray-50 p-3 rounded">
+                    <p class="mb-1"><span class="text-gray-400">账户状态：</span>正常</p>
+                    <p class="mb-1"><span class="text-gray-400">缴存基数：</span>6,500.00</p>
+                    <p><span class="text-gray-400">数据来源：</span>市住房公积金管理中心</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="flex-1 py-2 text-sm border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">数据有误</button>
+                    <button class="flex-1 py-2 text-sm bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700" onclick="alert('认领成功！');">确认认领</button>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-heart-pulse text-green-500 text-xl mr-3"></i>
+                        <h3 class="font-bold text-gray-800">门诊就诊记录</h3>
+                    </div>
+                    <span class="bg-red-50 text-red-500 text-xs px-2 py-1 rounded border border-red-100">待认领</span>
+                </div>
+                <div class="text-sm text-gray-600 mb-4 bg-gray-50 p-3 rounded">
+                    <p class="mb-1"><span class="text-gray-400">就诊时间：</span>2023-10-15</p>
+                    <p class="mb-1"><span class="text-gray-400">就诊科室：</span>呼吸内科</p>
+                    <p><span class="text-gray-400">数据来源：</span>市人民医院</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="flex-1 py-2 text-sm border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">数据有误</button>
+                    <button class="flex-1 py-2 text-sm bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700" onclick="alert('认领成功！');">确认认领</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabName) {
+        const tabClaimed = document.getElementById('tabClaimed');
+        const tabUnclaimed = document.getElementById('tabUnclaimed');
+        const contentClaimed = document.getElementById('contentClaimed');
+        const contentUnclaimed = document.getElementById('contentUnclaimed');
+
+        if (tabName === 'claimed') {
+            tabClaimed.className = 'flex-1 py-3 text-sm text-center tab-active transition';
+            tabUnclaimed.className = 'flex-1 py-3 text-sm text-center tab-inactive transition relative';
+            tabUnclaimed.innerHTML = '未认领的数据<span class="absolute top-2 right-6 w-2 h-2 bg-red-500 rounded-full"></span>';
+            contentClaimed.classList.remove('hidden');
+            contentClaimed.classList.add('block');
+            contentUnclaimed.classList.remove('block');
+            contentUnclaimed.classList.add('hidden');
+        } else {
+            tabUnclaimed.className = 'flex-1 py-3 text-sm text-center tab-active transition relative';
+            tabClaimed.className = 'flex-1 py-3 text-sm text-center tab-inactive transition';
+            contentUnclaimed.classList.remove('hidden');
+            contentUnclaimed.classList.add('block');
+            contentClaimed.classList.remove('block');
+            contentClaimed.classList.add('hidden');
+        }
+    }
+
+    // Handle URL parameters for initial tab
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+        if (tabParam === 'unclaimed') {
+            switchTab('unclaimed');
+        } else {
+            switchTab('claimed');
+        }
+    });
+</script>
+</body>
+</html>
