@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监管统计 - 一人一档后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar placeholder -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col h-full shrink-0">
+    <div class="h-16 flex items-center px-6 border-b border-gray-800 shrink-0">
+        <i class="fa-solid fa-cubes text-blue-500 text-2xl mr-3"></i>
+        <span class="text-lg font-bold tracking-wider">一人一档后台</span>
+    </div>
+    <div class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1" id="sidebar-menu">
+            <!-- 工作台 -->
+            <li>
+                <a href="admin_workbench.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-desktop w-6"></i> <span class="ml-3">智能工作台</span>
+                </a>
+            </li>
+            <!-- 数据检索管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-magnifying-glass w-6"></i> <span class="ml-3">数据检索管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+
+                    <li><a href="admin_dashboard.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据检索</a></li>
+                    <li><a href="admin_dashboard_results.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">组合检索</a></li>
+                    <li><a href="admin_tag_search.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">标签检索</a></li>
+                    <li><a href="admin_data_map.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数图分析</a></li>
+                </ul>
+            </li>
+            <!-- 认领数据管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-hand-holding-hand w-6"></i> <span class="ml-3">认领数据管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_catalog_config.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">目录管理</a></li>
+                    <li><a href="admin_corrections.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据纠错处置</a></li>
+                </ul>
+            </li>
+            <!-- 自有数据管理 -->
+            <li>
+                <a href="admin_own_data_catalog.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-folder-open w-6"></i> <span class="ml-3">自有数据管理</span>
+                </a>
+            </li>
+            <!-- 授权管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-shield-halved w-6"></i> <span class="ml-3">授权管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_auth_templates.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">规则配置</a></li>
+                    <li><a href="admin_auth_monitor.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">异常监控</a></li>
+                    <li><a href="admin_auth_blockchain.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">可信存证服务</a></li>
+                    <li><a href="admin_auth_records.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">授权记录</a></li>
+                </ul>
+            </li>
+            <!-- 数据服务管理 -->
+            <li>
+                <a href="admin_services_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-layer-group w-6"></i> <span class="ml-3">数据服务管理</span>
+                </a>
+            </li>
+            <!-- 仪表盘配置 -->
+                <li>
+                    <a href="admin_profile_dashboard_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-chart-pie w-6"></i> <span class="ml-3">仪表盘配置</span>
+                    </a>
+                </li>
+            <!-- 监管统计 (Hidden) -->
+                <li class="hidden">
+                    <a href="admin_monitor_stats.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-chart-line w-6"></i> <span class="ml-3">监管统计</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 shrink-0">
+            <div class="flex items-center text-gray-500">
+                <i class="fa-solid fa-bars cursor-pointer hover:text-gray-800 mr-4"></i>
+                <span class="text-sm font-medium text-gray-800">监管统计综合大屏</span>
+            </div>
+            <!-- ... -->
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <!-- KPIs -->
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+                    <div class="text-gray-500 text-sm mb-2">平台累计用户</div>
+                    <div class="text-2xl font-bold text-gray-800">2,154,390</div>
+                    <div class="mt-2 text-xs text-green-500">+12% 同比增长</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+                    <div class="text-gray-500 text-sm mb-2">总认领数据量 (条)</div>
+                    <div class="text-2xl font-bold text-gray-800">18,502,400</div>
+                    <div class="mt-2 text-xs text-green-500">+5.4% 同比增长</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+                    <div class="text-gray-500 text-sm mb-2">总服务调用次数 (次)</div>
+                    <div class="text-2xl font-bold text-blue-600">45,892,100</div>
+                    <div class="mt-2 text-xs text-green-500">+22% 同比增长</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+                    <div class="text-gray-500 text-sm mb-2">纠错处置率</div>
+                    <div class="text-2xl font-bold text-gray-800">98.5%</div>
+                    <div class="mt-2 text-xs text-gray-500">平均处理时长 1.2 天</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4">各部门数据认领情况排名 (Top 5)</h3>
+                    <div id="deptChart" style="width: 100%; height: 300px;"></div>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4">应用服务调用热度</h3>
+                    <div id="serviceChart" style="width: 100%; height: 300px;"></div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-base font-bold text-gray-800 mb-4">全平台月度活跃度趋势 (MAU)</h3>
+                <div id="mauChart" style="width: 100%; height: 300px;"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin_sidebar_logic.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // ECharts Setup
+            var deptChart = echarts.init(document.getElementById('deptChart'));
+            deptChart.setOption({
+                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+                xAxis: { type: 'value' },
+                yAxis: { type: 'category', data: ['卫健委', '人社局', '公安局', '医保局', '公积金中心'].reverse() },
+                series: [{
+                    name: '认领量(万条)',
+                    type: 'bar',
+                    data: [120, 150, 180, 210, 250],
+                    itemStyle: { color: '#3b82f6', borderRadius: [0, 4, 4, 0] }
+                }]
+            });
+
+            var serviceChart = echarts.init(document.getElementById('serviceChart'));
+            serviceChart.setOption({
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+                    data: [
+                        { value: 1048, name: '一网通办', itemStyle: {color: '#3b82f6'} },
+                        { value: 735, name: '社保查询', itemStyle: {color: '#10b981'} },
+                        { value: 580, name: '公积金贷款', itemStyle: {color: '#f59e0b'} },
+                        { value: 484, name: '就医结算', itemStyle: {color: '#ef4444'} },
+                        { value: 300, name: '其他', itemStyle: {color: '#9ca3af'} }
+                    ]
+                }]
+            });
+
+            var mauChart = echarts.init(document.getElementById('mauChart'));
+            mauChart.setOption({
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'] },
+                yAxis: { type: 'value', name: '万人' },
+                series: [{
+                    data: [82, 93, 90, 93, 129, 133, 132, 145, 150, 160, 165, 180],
+                    type: 'line',
+                    smooth: true,
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(59, 130, 246, 0.5)' },
+                            { offset: 1, color: 'rgba(59, 130, 246, 0.0)' }
+                        ])
+                    },
+                    itemStyle: { color: '#3b82f6' }
+                }]
+            });
+
+            window.addEventListener('resize', function() {
+                deptChart.resize();
+                serviceChart.resize();
+                mauChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>

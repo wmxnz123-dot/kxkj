@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自有数据目录管理 - 一人一档后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar placeholder -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col h-full shrink-0">
+    <div class="h-16 flex items-center px-6 border-b border-gray-800 shrink-0">
+        <i class="fa-solid fa-cubes text-blue-500 text-2xl mr-3"></i>
+        <span class="text-lg font-bold tracking-wider">一人一档后台</span>
+    </div>
+    <div class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1" id="sidebar-menu">
+            <!-- 工作台 -->
+            <li>
+                <a href="admin_workbench.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-desktop w-6"></i> <span class="ml-3">智能工作台</span>
+                </a>
+            </li>
+            <!-- 数据检索管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-magnifying-glass w-6"></i> <span class="ml-3">数据检索管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+
+                    <li><a href="admin_dashboard.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据检索</a></li>
+                    <li><a href="admin_dashboard_results.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">组合检索</a></li>
+                    <li><a href="admin_tag_search.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">标签检索</a></li>
+                    <li><a href="admin_data_map.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数图分析</a></li>
+                </ul>
+            </li>
+            <!-- 认领数据管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-hand-holding-hand w-6"></i> <span class="ml-3">认领数据管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_catalog_config.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">目录管理</a></li>
+                    <li><a href="admin_corrections.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据纠错处置</a></li>
+                </ul>
+            </li>
+            <!-- 自有数据管理 -->
+            <li>
+                <a href="admin_own_data_catalog.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-folder-open w-6"></i> <span class="ml-3">自有数据管理</span>
+                </a>
+            </li>
+            <!-- 授权管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-shield-halved w-6"></i> <span class="ml-3">授权管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_auth_templates.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">规则配置</a></li>
+                    <li><a href="admin_auth_monitor.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">异常监控</a></li>
+                    <li><a href="admin_auth_blockchain.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">可信存证</a></li>
+                    <li><a href="admin_auth_records.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">授权记录</a></li>
+                </ul>
+            </li>
+            <!-- 数据服务管理 -->
+            <li>
+                <a href="admin_services_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-layer-group w-6"></i> <span class="ml-3">数据服务管理</span>
+                </a>
+            </li>
+            <!-- 仪表盘配置 -->
+                <li>
+                    <a href="admin_profile_dashboard_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-chart-pie w-6"></i> <span class="ml-3">仪表盘配置</span>
+                    </a>
+                </li>
+            <!-- 监管统计 (Hidden) -->
+                <li class="hidden">
+                    <a href="admin_monitor_stats.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-chart-line w-6"></i> <span class="ml-3">监管统计</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Topbar -->
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 shrink-0">
+            <div class="flex items-center text-gray-500">
+                <i class="fa-solid fa-bars cursor-pointer hover:text-gray-800 mr-4"></i>
+                <span class="text-sm">自有数据管理 <span class="mx-2">/</span> <span class="text-gray-800 font-medium">目录管理</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="./index.html" class="text-sm px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50">原型目录</a>
+                <div class="flex items-center cursor-pointer ml-4 border-l border-gray-200 pl-4">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-2">管</div>
+                    <span class="text-sm font-medium">超级管理员</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">手机端自有数据分类与目录</h2>
+            </div>
+
+            <!-- Warning/Info Banner -->
+            <div class="bg-orange-50 border border-orange-200 text-orange-700 px-4 py-3 rounded-lg mb-6 flex items-start">
+                <i class="fa-solid fa-circle-info mt-0.5 mr-3 text-orange-500"></i>
+                <div class="text-sm">
+                    此处的配置将直接影响 App 端“自有数据-上传”时用户可选择的目录结构。请谨慎修改已生效的目录，以免影响用户历史数据的展示。
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Category Tree -->
+                <div class="col-span-3 bg-white rounded-lg shadow-sm border border-gray-100 p-4 h-[calc(100vh-250px)] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4 border-b pb-2">
+                        <h3 class="font-bold text-gray-800">数据分类树</h3>
+                        <button class="text-sm bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded transition"><i class="fa-solid fa-folder-plus mr-1"></i>新增分类</button>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="cursor-pointer bg-blue-50 text-blue-700 font-medium rounded px-3 py-2 flex justify-between items-center">
+                            <span><i class="fa-regular fa-folder-open mr-2"></i>证明材料</span>
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                        </li>
+                        <li class="cursor-pointer hover:bg-gray-50 rounded px-3 py-2 flex justify-between items-center transition">
+                            <span><i class="fa-regular fa-folder mr-2 text-gray-400"></i>身份资料</span>
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                        </li>
+                        <li class="cursor-pointer hover:bg-gray-50 rounded px-3 py-2 flex justify-between items-center transition">
+                            <span><i class="fa-regular fa-folder mr-2 text-gray-400"></i>教育证书</span>
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                        </li>
+                        <li class="cursor-pointer hover:bg-gray-50 rounded px-3 py-2 flex justify-between items-center transition">
+                            <span><i class="fa-regular fa-folder mr-2 text-gray-400"></i>医疗健康</span>
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                        </li>
+                        <li class="cursor-pointer hover:bg-gray-50 rounded px-3 py-2 flex justify-between items-center transition">
+                            <span><i class="fa-regular fa-folder mr-2 text-gray-400"></i>其他资产</span>
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Sub-items Table -->
+                <div class="col-span-9 bg-white rounded-lg shadow-sm border border-gray-100">
+                    <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800">【证明材料】下属目录</h3>
+                        <button class="text-sm bg-white border border-gray-300 px-3 py-1.5 rounded hover:bg-gray-50"><i class="fa-solid fa-plus mr-1"></i>添加目录</button>
+                    </div>
+                    <div class="overflow-x-auto p-4">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-500 text-sm border-b border-gray-200">
+                                    <th class="p-3 font-medium">目录名称</th>
+                                    <th class="p-3 font-medium">关联模板</th>
+                                    <th class="p-3 font-medium">图标</th>
+                                    <th class="p-3 font-medium">排序</th>
+                                    <th class="p-3 font-medium">状态</th>
+                                    <th class="p-3 font-medium">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-800">手机号变更证明</td>
+                                    <td class="p-3 text-gray-600">通用证明材料（含附件）</td>
+                                    <td class="p-3"><i class="fa-solid fa-file-lines text-green-500 text-lg"></i></td>
+                                    <td class="p-3">1</td>
+                                    <td class="p-3"><span class="text-green-600 bg-green-50 px-2 py-1 rounded text-xs border border-green-100">上架</span></td>
+                                    <td class="p-3 space-x-2">
+                                        <a href="#" class="text-blue-600 hover:text-blue-800">编辑</a>
+                                        <a href="#" class="text-red-600 hover:text-red-800">下架</a>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-800">工作证明</td>
+                                    <td class="p-3 text-gray-600">单位证明材料</td>
+                                    <td class="p-3"><i class="fa-solid fa-building text-blue-500 text-lg"></i></td>
+                                    <td class="p-3">2</td>
+                                    <td class="p-3"><span class="text-green-600 bg-green-50 px-2 py-1 rounded text-xs border border-green-100">上架</span></td>
+                                    <td class="p-3 space-x-2">
+                                        <a href="#" class="text-blue-600 hover:text-blue-800">编辑</a>
+                                        <a href="#" class="text-red-600 hover:text-red-800">下架</a>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-800">亲属关系证明</td>
+                                    <td class="p-3 text-gray-600">通用证明材料（含附件）</td>
+                                    <td class="p-3"><i class="fa-solid fa-people-group text-purple-500 text-lg"></i></td>
+                                    <td class="p-3">3</td>
+                                    <td class="p-3"><span class="text-gray-500 bg-gray-100 px-2 py-1 rounded text-xs border border-gray-200">下架</span></td>
+                                    <td class="p-3 space-x-2">
+                                        <a href="#" class="text-blue-600 hover:text-blue-800">编辑</a>
+                                        <a href="#" class="text-green-600 hover:text-green-800">上架</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+<script src="admin_sidebar_logic.js"></script>
+</body>
+</html>

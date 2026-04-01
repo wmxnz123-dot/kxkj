@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>身份核验 - 个人专属数据空间App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; }
+        .mobile-view { max-width: 390px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .scan-line { width: 100%; height: 2px; background-color: #3b82f6; position: absolute; top: 0; left: 0; box-shadow: 0 0 10px 2px rgba(59, 130, 246, 0.5); animation: scan 2s infinite linear; }
+        @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    </style>
+</head>
+<body>
+<div class="mobile-view">
+    <!-- Topbar -->
+    <div class="px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-50 bg-white">
+        <a href="javascript:history.back()" class="text-gray-600"><i class="fa-solid fa-angle-left text-xl"></i></a>
+        <h1 class="text-lg font-bold text-gray-800">身份核验</h1>
+        <div class="w-6"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 flex flex-col items-center justify-center px-6 py-10">
+        <div class="text-center mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">为保障您的数据安全</h2>
+            <p class="text-sm text-gray-500">查看敏感数据前需进行人脸认证核验身份</p>
+        </div>
+
+        <!-- Face Scan Animation Area -->
+        <div class="relative w-56 h-56 rounded-full border-4 border-dashed border-blue-200 flex items-center justify-center overflow-hidden mb-10 bg-gray-50">
+            <div class="scan-line"></div>
+            <i class="fa-regular fa-face-smile text-7xl text-blue-300 opacity-50"></i>
+            
+            <!-- Corner Brackets (Decorative) -->
+            <div class="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-xl"></div>
+            <div class="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-xl"></div>
+            <div class="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-xl"></div>
+            <div class="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-xl"></div>
+        </div>
+
+        <div class="text-center w-full space-y-4">
+            <p class="text-sm text-gray-600 mb-6 flex items-center justify-center">
+                <i class="fa-solid fa-shield-halved text-green-500 mr-2"></i>
+                本次操作基于公安部可信身份认证体系
+            </p>
+            <button id="startAuthBtn" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-blue-700 transition" onclick="simulateAuth()">
+                开始人脸认证
+            </button>
+            <button class="w-full bg-white text-gray-600 font-bold py-3.5 rounded-xl border border-gray-300 hover:bg-gray-50 transition" onclick="history.back()">
+                暂不查看
+            </button>
+        </div>
+    </div>
+    
+    <!-- Success Overlay (Hidden by default) -->
+    <div id="successOverlay" class="absolute inset-0 bg-white flex flex-col items-center justify-center z-50 hidden">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fa-solid fa-check text-4xl text-green-500"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-800">认证成功</h2>
+        <p class="text-sm text-gray-500 mt-2">正在跳转至数据详情...</p>
+    </div>
+</div>
+
+<script>
+    function simulateAuth() {
+        const btn = document.getElementById('startAuthBtn');
+        const overlay = document.getElementById('successOverlay');
+        
+        // Change button state
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 认证中...';
+        btn.classList.add('opacity-80', 'cursor-not-allowed');
+        btn.disabled = true;
+
+        // Get target URL from query parameter or default
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUrl = urlParams.get('target') || 'app_item_detail.html';
+
+        // Simulate network/process delay
+        setTimeout(() => {
+            overlay.classList.remove('hidden');
+            
+            // Redirect after showing success
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1000);
+            
+        }, 1500);
+    }
+</script>
+</body>
+</html>

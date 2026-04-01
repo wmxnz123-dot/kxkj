@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据项详情</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background-color: #f3f4f6; }
+    .mobile-view { max-width: 390px; margin: 0 auto; background-color: #f8fafc; min-height: 100vh; position: relative; padding-bottom: 92px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <div class="mobile-view">
+    <div class="bg-white px-4 py-4 border-b border-gray-100 sticky top-0 z-10">
+      <div class="flex items-center justify-between">
+        <a href="app_my_data.html" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-700">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="text-base font-semibold text-gray-900">基础身份信息</div>
+        <a href="./index.html" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-700">
+          <i class="fa-solid fa-grid-2"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="px-4 mt-4">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="text-sm font-bold text-gray-900">数据状态</div>
+          </div>
+          <span class="text-xs px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-100 h-fit">已认领</span>
+        </div>
+        <div class="mt-3 grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-gray-50 border border-gray-100 rounded-xl p-3">
+            <div class="text-xs text-gray-500">来源</div>
+            <div class="mt-1 font-semibold text-gray-900">潍坊市公安局</div>
+          </div>
+          <div class="bg-gray-50 border border-gray-100 rounded-xl p-3">
+            <div class="text-xs text-gray-500">更新时间</div>
+            <div class="mt-1 font-semibold text-gray-900">2025-10-25 09:30:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 mt-4">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 relative">
+        <div class="flex items-center justify-between">
+            <div class="text-sm font-bold text-gray-900">数据详情</div>
+            <button onclick="document.getElementById('aiModal').classList.remove('hidden')" class="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-2.5 py-1 rounded-full shadow-sm flex items-center hover:opacity-90 transition">
+                <i class="fa-solid fa-sparkles mr-1"></i> AI 智能解读
+            </button>
+        </div>
+        <div class="mt-3 divide-y divide-gray-100">
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">姓名</div>
+            <div class="text-sm font-semibold text-gray-900">张三三</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">身份证号码</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">44030419900101001X</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">性别</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">男</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">住址</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">潍坊市幸福花园小区</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">签发机关</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">潍坊市公安局幸福花园分局</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">身份证起始日期</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">1990-01-01</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">身份证截止日期</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">2030-12-31</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">民族</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">汉族</div>
+          </div>
+          <div class="py-3 flex items-start justify-between gap-4">
+            <div class="text-xs text-gray-500">出生日期</div>
+            <div class="text-sm font-semibold text-gray-900 text-right">1990-01-01</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 mt-4">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="text-sm font-bold text-gray-900">链上信息</div>
+        <div class="py-3 flex items-start justify-between gap-4">
+          <div class="text-xs text-gray-500">上链时间</div>
+          <div class="text-sm font-semibold text-gray-900 text-right">1990-01-01 00:00:00</div>
+        </div>
+    </div>
+    </div>
+    <div class="px-4 mt-4">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+        <div class="text-sm font-bold text-gray-900">说明</div>
+        <div class="text-xs text-gray-500 mt-2 leading-relaxed">
+          本页面用于核对数据字段内容。如发现信息错误或缺失，可提交纠错申请并上传证明材料。认领后数据进入个人空间，可用于授权与数据服务。
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="fixed bottom-0 left-0 w-full flex justify-center z-50 pointer-events-none">
+        <div class="w-full max-w-[390px] bg-white border-t border-gray-200 p-4 pointer-events-auto flex space-x-4">
+            <a href="app_correction_submit.html" class="flex-1 bg-white text-gray-700 text-center py-3 rounded-xl font-bold border border-gray-300 hover:bg-gray-50 transition">
+                <i class="fa-solid fa-pen-to-square mr-1"></i> 数据纠错
+            </a>
+            <button class="flex-1 bg-blue-600 text-white text-center py-3 rounded-xl font-bold shadow-md hover:bg-blue-700 transition" onclick="alert('数据更新请求已发送！')">
+                <i class="fa-solid fa-rotate-right mr-1"></i> 数据更新
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Interpretation Modal -->
+    <div id="aiModal" class="hidden fixed inset-0 z-[60] bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-[340px] overflow-hidden shadow-2xl">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white flex justify-between items-center">
+                <h3 class="font-bold flex items-center"><i class="fa-solid fa-sparkles mr-2"></i>AI 体检报告解读</h3>
+                <button onclick="document.getElementById('aiModal').classList.add('hidden')" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-5 max-h-[60vh] overflow-y-auto text-sm text-gray-700 leading-relaxed space-y-4">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0 mr-3">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <p class="mb-2">根据您2025年10月20日的体检报告，我为您提取了以下关键信息：</p>
+                        <ul class="list-disc pl-4 space-y-1 mb-2">
+                            <li><span class="font-bold text-gray-800">总体情况：</span>基本正常，但部分指标需关注。</li>
+                            <li><span class="font-bold text-gray-800">异常指标：</span>低密度脂蛋白胆固醇（LDL-C）偏高，数值为 3.8 mmol/L（正常参考值 < 3.4）。</li>
+                            <li><span class="font-bold text-gray-800">健康建议：</span>建议近期减少高脂肪食物摄入，增加有氧运动。如一个月后复查仍偏高，请咨询心血管内科医生。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
+                <button onclick="document.getElementById('aiModal').classList.add('hidden')" class="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm hover:bg-blue-700">我知道了</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
+

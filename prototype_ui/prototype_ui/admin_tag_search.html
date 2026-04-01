@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签检索 - 一人一档后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col h-full shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 shrink-0">
+            <i class="fa-solid fa-cubes text-blue-500 text-2xl mr-3"></i>
+            <span class="text-lg font-bold tracking-wider">一人一档后台</span>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1" id="sidebar-menu">
+                <!-- 工作台 -->
+                <li>
+                    <a href="admin_workbench.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-desktop w-6"></i> <span class="ml-3">智能工作台</span>
+                    </a>
+                </li>
+                <!-- 数据检索管理 -->
+                <li>
+                    <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-magnifying-glass w-6"></i> <span class="ml-3">数据检索管理</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                    </div>
+                    <ul class="pl-14 py-2 space-y-3 text-sm bg-gray-800/50 block">
+
+                    <li><a href="admin_dashboard.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据检索</a></li>
+                    <li><a href="admin_dashboard_results.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">组合检索</a></li>
+                    <li><a href="admin_tag_search.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">标签检索</a></li>
+                    <li><a href="admin_data_map.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数图分析</a></li>
+                </ul>
+                </li>
+                <!-- 认领数据管理 -->
+                <li>
+                    <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-hand-holding-hand w-6"></i> <span class="ml-3">认领数据管理</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                    </div>
+                    <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                        <li><a href="admin_catalog_config.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">目录管理</a></li>
+                        <li><a href="admin_corrections.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据纠错处置</a></li>
+                    </ul>
+                </li>
+                <!-- 自有数据管理 -->
+            <li>
+                <a href="admin_own_data_catalog.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-folder-open w-6"></i> <span class="ml-3">自有数据管理</span>
+                </a>
+            </li>
+                <!-- 授权管理 -->
+                <li>
+                    <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-shield-halved w-6"></i> <span class="ml-3">授权管理</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                    </div>
+                    <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                        <li><a href="admin_auth_templates.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">规则配置</a></li>
+                        <li><a href="admin_auth_monitor.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">异常监控</a></li>
+                        <li><a href="admin_auth_blockchain.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">可信存证服务</a></li>
+                        <li><a href="admin_auth_records.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">授权记录</a></li>
+                    </ul>
+                </li>
+                <!-- 数据服务管理 -->
+                <li>
+                    <a href="admin_services_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-layer-group w-6"></i> <span class="ml-3">数据服务管理</span>
+                    </a>
+                </li>
+                <!-- 仪表盘配置 -->
+                <li>
+                    <a href="admin_profile_dashboard_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-chart-pie w-6"></i> <span class="ml-3">仪表盘配置</span>
+                    </a>
+                </li>
+                <!-- 监管统计 (Hidden) -->
+                <li class="hidden">
+                    <a href="admin_monitor_stats.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-chart-line w-6"></i> <span class="ml-3">监管统计</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col h-full">
+        <!-- Topbar -->
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 shrink-0">
+            <div class="flex items-center text-gray-500">
+                <i class="fa-solid fa-bars cursor-pointer hover:text-gray-800 mr-4"></i>
+                <span class="text-sm">数据检索 <span class="mx-2">/</span> <span class="text-gray-800 font-medium">标签检索</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <i class="fa-regular fa-bell text-gray-500 hover:text-gray-800 cursor-pointer text-lg mx-2"></i>
+                <div class="flex items-center cursor-pointer ml-4 border-l border-gray-200 pl-4">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-2">管</div>
+                    <span class="text-sm font-medium">超级管理员</span>
+                    <i class="fa-solid fa-angle-down text-gray-400 text-xs ml-2"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace: Top-Bottom layout for Tag Search -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50 flex flex-col gap-6">
+            
+            <!-- Top Panel: Tag Categories & Counts (Cloud/Grid style) -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 shrink-0">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-700 text-lg"><i class="fa-solid fa-tags text-blue-500 mr-2"></i>标签分类检索</h3>
+                    <div class="relative w-64">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" placeholder="搜索标签名称..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-9 pr-3 py-1.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition">
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="grid grid-cols-6 gap-3 overflow-hidden transition-all duration-300 max-h-[92px]" id="tagList">
+                        <!-- Tag Items (Simulating more than 2 rows) -->
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-blue-600 bg-blue-50 border border-blue-100 transition hover:shadow-sm h-[40px]" onclick="selectTag('高层次人才', 1200, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-user-graduate w-5 text-center mr-1 text-blue-500"></i>
+                                <span class="font-medium text-sm">高层次人才</span>
+                            </div>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-semibold">1,200</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('退役军人', 850, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-medal w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">退役军人</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">850</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('适龄入园儿童', 320, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-children w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">适龄入园儿童</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">320</span>
+                        </button>
+                        
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('低保户群体', 560, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-hand-holding-heart w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">低保户群体</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">560</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('高新技术企业高管', 320, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-user-tie w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">高企高管</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">320</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('残疾人士', 1150, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-wheelchair w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">残疾人士</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">1,150</span>
+                        </button>
+
+                        <!-- Extra simulated tags -->
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('独居老人', 890, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-person-cane w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">独居老人</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">890</span>
+                        </button>
+                        
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('灵活就业人员', 2100, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-briefcase w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">灵活就业</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">2,100</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('网约车司机', 1450, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-car w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">网约车司机</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">1,450</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('外卖骑手', 1800, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-motorcycle w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">外卖骑手</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">1,800</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('快递小哥', 2200, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-box w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">快递小哥</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">2,200</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('建筑工人', 3100, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-helmet-safety w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">建筑工人</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">3,100</span>
+                        </button>
+
+                        <button class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]" onclick="selectTag('环卫工人', 950, this)">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-broom w-5 text-center text-gray-400 group-hover:text-blue-400 mr-1 transition"></i>
+                                <span class="text-sm">环卫工人</span>
+                            </div>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition">950</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Toggle Expand Button -->
+                    <div class="mt-3 flex justify-center">
+                        <button id="toggleTagListBtn" class="text-blue-600 text-xs font-medium hover:text-blue-800 transition flex items-center bg-blue-50 px-3 py-1 rounded-full" onclick="toggleTags()">
+                            <span>展开更多标签</span> <i class="fa-solid fa-chevron-down ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Panel: User Information Table & Map -->
+            <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden min-h-[500px]">
+                
+                <!-- Header & Actions -->
+                <div class="p-5 border-b border-gray-100 flex items-start justify-between bg-gray-50/50">
+                    <div class="flex flex-col gap-3">
+                        <h2 class="text-lg font-bold text-gray-800" id="currentTagTitle">当前标签：高层次人才</h2>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-2 bg-gray-100 p-1 rounded-lg">
+                                <button id="btnListView" class="px-4 py-1.5 bg-white shadow-sm rounded text-sm font-medium text-gray-800 transition" onclick="switchView('list')"><i class="fa-solid fa-list mr-1"></i> 列表视图</button>
+                                <button id="btnMapView" class="px-4 py-1.5 rounded text-sm text-gray-500 hover:text-gray-800 transition" onclick="switchView('map')"><i class="fa-solid fa-map-location-dot mr-1"></i> 数据地图</button>
+                            </div>
+                            <span class="text-sm text-gray-500">已找到 <span class="text-blue-600 font-bold" id="currentTagCount">1,200</span> 条数据</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button class="px-4 py-1.5 bg-white border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition shadow-sm flex items-center">
+                            <i class="fa-solid fa-file-export mr-1"></i> 导出数据
+                        </button>
+                    </div>
+                </div>
+
+                <!-- List View Container -->
+                <div id="listViewContainer" class="flex-1 flex flex-col">
+                    <div class="flex-1 overflow-auto p-5">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-sm">
+                                <th class="p-3 rounded-tl-lg font-medium">序号</th>
+                                <th class="p-3 font-medium">姓名</th>
+                                <th class="p-3 font-medium">身份证号 (脱敏)</th>
+                                <th class="p-3 font-medium">联系电话</th>
+                                <th class="p-3 font-medium">所属标签</th>
+                                <th class="p-3 font-medium">更新时间</th>
+                                <th class="p-3 rounded-tr-lg font-medium text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-700" id="userTableBody">
+                            <!-- Rows will be populated by JS based on selected tag -->
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition">
+                                <td class="p-3 text-gray-500">1</td>
+                                <td class="p-3 font-medium">张*三</td>
+                                <td class="p-3 font-mono text-gray-500">370781********1234</td>
+                                <td class="p-3">138****5678</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">高层次人才</span>
+                                </td>
+                                <td class="p-3 text-gray-500">2024-03-20 10:30</td>
+                                <td class="p-3 text-center">
+                                    <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition">
+                                <td class="p-3 text-gray-500">2</td>
+                                <td class="p-3 font-medium">李*华</td>
+                                <td class="p-3 font-mono text-gray-500">370702********5678</td>
+                                <td class="p-3">139****1234</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">高层次人才</span>
+                                </td>
+                                <td class="p-3 text-gray-500">2024-03-19 14:15</td>
+                                <td class="p-3 text-center">
+                                    <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition">
+                                <td class="p-3 text-gray-500">3</td>
+                                <td class="p-3 font-medium">王*平</td>
+                                <td class="p-3 font-mono text-gray-500">370703********9012</td>
+                                <td class="p-3">137****9012</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">高层次人才</span>
+                                </td>
+                                <td class="p-3 text-gray-500">2024-03-18 09:45</td>
+                                <td class="p-3 text-center">
+                                    <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition">
+                                <td class="p-3 text-gray-500">4</td>
+                                <td class="p-3 font-medium">赵*强</td>
+                                <td class="p-3 font-mono text-gray-500">370704********3456</td>
+                                <td class="p-3">135****3456</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">高层次人才</span>
+                                </td>
+                                <td class="p-3 text-gray-500">2024-03-17 16:20</td>
+                                <td class="p-3 text-center">
+                                    <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition">
+                                <td class="p-3 text-gray-500">5</td>
+                                <td class="p-3 font-medium">陈*</td>
+                                <td class="p-3 font-mono text-gray-500">370705********7890</td>
+                                <td class="p-3">136****7890</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">高层次人才</span>
+                                </td>
+                                <td class="p-3 text-gray-500">2024-03-16 11:10</td>
+                                <td class="p-3 text-center">
+                                    <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination -->
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between shrink-0 px-5 pb-5">
+                        <span class="text-sm text-gray-500">显示第 1 到 5 条记录，总共 1,200 条</span>
+                        <div class="flex space-x-1">
+                            <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-gray-500 hover:bg-gray-50 text-sm disabled:opacity-50" disabled>上一页</button>
+                            <button class="px-3 py-1.5 bg-blue-600 border border-blue-600 rounded text-white text-sm">1</button>
+                            <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-gray-600 hover:bg-gray-50 text-sm">2</button>
+                            <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-gray-600 hover:bg-gray-50 text-sm">3</button>
+                            <span class="px-2 py-1.5 text-gray-500 text-sm">...</span>
+                            <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-gray-600 hover:bg-gray-50 text-sm">240</button>
+                            <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-gray-600 hover:bg-gray-50 text-sm">下一页</button>
+                        </div>
+                    </div>
+                </div> <!-- End of List View Container -->
+
+                <!-- Map View Container -->
+                <div id="mapViewContainer" class="hidden p-4 flex-1">
+                    <div class="w-full h-[500px] bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200" id="resultMapChart">
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script to handle tag selection and table update -->
+    <script>
+        // Dummy data for different tags to simulate filtering
+        const dummyData = {
+            '高层次人才': [
+                { id: 1, name: '张*三', idCard: '370781********1234', phone: '138****5678', date: '2024-03-20 10:30' },
+                { id: 2, name: '李*华', idCard: '370702********5678', phone: '139****1234', date: '2024-03-19 14:15' },
+                { id: 3, name: '王*平', idCard: '370703********9012', phone: '137****9012', date: '2024-03-18 09:45' },
+                { id: 4, name: '赵*强', idCard: '370704********3456', phone: '135****3456', date: '2024-03-17 16:20' },
+                { id: 5, name: '陈*', idCard: '370705********7890', phone: '136****7890', date: '2024-03-16 11:10' }
+            ],
+            '退役军人': [
+                { id: 1, name: '刘*兵', idCard: '370782********1111', phone: '131****1111', date: '2024-03-21 08:30' },
+                { id: 2, name: '孙*国', idCard: '370783********2222', phone: '132****2222', date: '2024-03-20 09:15' },
+                { id: 3, name: '周*军', idCard: '370784********3333', phone: '133****3333', date: '2024-03-19 10:45' }
+            ],
+            '适龄入园儿童': [
+                { id: 1, name: '吴*童', idCard: '370785********4444', phone: '158****4444', date: '2024-03-22 07:30' },
+                { id: 2, name: '郑*宝', idCard: '370786********5555', phone: '159****5555', date: '2024-03-22 08:15' }
+            ],
+            '低保户群体': [
+                { id: 1, name: '冯*民', idCard: '370787********6666', phone: '150****6666', date: '2024-03-10 14:30' }
+            ]
+        };
+
+        function selectTag(tagName, count, element) {
+            // Update UI title and count
+            document.getElementById('currentTagTitle').innerText = '当前标签：' + tagName;
+            document.getElementById('currentTagCount').innerText = count.toLocaleString();
+
+            // Reset all tag buttons styles
+            const buttons = document.querySelectorAll('#tagList button');
+            buttons.forEach(btn => {
+                // Reset to default inactive style
+                btn.className = 'flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 bg-gray-50 border border-gray-100 hover:bg-white hover:border-blue-200 hover:text-blue-600 transition group h-[40px]';
+                
+                // Reset icon color
+                const icon = btn.querySelector('i');
+                icon.className = icon.className.replace('text-blue-500', 'text-gray-400');
+                if(!icon.className.includes('group-hover:text-blue-400')) {
+                    icon.className += ' group-hover:text-blue-400';
+                }
+                
+                // Reset badge style
+                const badge = btn.querySelector('span:last-child');
+                badge.className = 'text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition';
+                
+                // Reset text weight
+                const textSpan = btn.querySelector('span:first-of-type');
+                if(textSpan) textSpan.className = 'text-sm';
+            });
+
+            // Set active style for clicked element
+            element.className = 'flex items-center justify-between px-3 py-2 rounded-lg text-blue-600 bg-blue-50 border border-blue-100 transition hover:shadow-sm h-[40px]';
+            
+            // Set active icon color
+            const activeIcon = element.querySelector('i');
+            activeIcon.className = activeIcon.className.replace('text-gray-400', 'text-blue-500').replace('group-hover:text-blue-400', '').trim();
+            
+            // Set active badge style
+            const activeBadge = element.querySelector('span:last-child');
+            activeBadge.className = 'text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-semibold';
+            
+            // Set active text weight
+            const activeTextSpan = element.querySelector('span:first-of-type');
+            if(activeTextSpan) activeTextSpan.className = 'font-medium text-sm';
+
+            // Populate table with data
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = ''; // clear current
+
+            // Generate rows based on dummy data or fallback to generic
+            const dataToRender = dummyData[tagName] || dummyData['高层次人才'];
+
+            dataToRender.forEach((user, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-50 hover:bg-blue-50/30 transition';
+                
+                tr.innerHTML = `
+                    <td class="p-3 text-gray-500">${index + 1}</td>
+                    <td class="p-3 font-medium">${user.name}</td>
+                    <td class="p-3 font-mono text-gray-500">${user.idCard}</td>
+                    <td class="p-3">${user.phone}</td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">${tagName}</span>
+                    </td>
+                    <td class="p-3 text-gray-500">${user.date}</td>
+                    <td class="p-3 text-center">
+                        <a href="admin_user_profile.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">查看档案</a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // Update pagination text
+            const paginationText = document.querySelector('.mt-6 > span');
+            if (paginationText) {
+                paginationText.innerText = `显示第 1 到 ${dataToRender.length} 条记录，总共 ${count.toLocaleString()} 条`;
+            }
+        }
+
+        let mapInstance = null;
+
+        function switchView(viewType) {
+            const btnList = document.getElementById('btnListView');
+            const btnMap = document.getElementById('btnMapView');
+            const listContainer = document.getElementById('listViewContainer');
+            const mapContainer = document.getElementById('mapViewContainer');
+
+            if (viewType === 'list') {
+                btnList.className = 'px-4 py-1.5 bg-white shadow-sm rounded text-sm font-medium text-gray-800 transition';
+                btnMap.className = 'px-4 py-1.5 rounded text-sm text-gray-500 hover:text-gray-800 transition';
+                listContainer.classList.remove('hidden');
+                mapContainer.classList.add('hidden');
+            } else {
+                btnMap.className = 'px-4 py-1.5 bg-white shadow-sm rounded text-sm font-medium text-gray-800 transition';
+                btnList.className = 'px-4 py-1.5 rounded text-sm text-gray-500 hover:text-gray-800 transition';
+                listContainer.classList.add('hidden');
+                mapContainer.classList.remove('hidden');
+
+                // Render map if not already rendered
+                if (!mapInstance) {
+                    renderMap();
+                } else {
+                    // Need to resize in case container size changed while hidden
+                    setTimeout(() => {
+                        mapInstance.resize();
+                    }, 0);
+                }
+            }
+        }
+
+        function renderMap() {
+            const chartDom = document.getElementById('resultMapChart');
+            if (!chartDom) return;
+            
+            mapInstance = echarts.init(chartDom);
+            mapInstance.showLoading();
+            
+            fetch('https://geo.datav.aliyun.com/areas_v3/bound/370700_full.json')
+                .then(response => response.json())
+                .then(geoJson => {
+                    echarts.registerMap('潍坊', geoJson);
+                    mapInstance.hideLoading();
+                    
+                    // 模拟各区县标签人群分布数据
+                    var mapData = [
+                        {name: '高新区', value: 350},
+                        {name: '奎文区', value: 280},
+                        {name: '坊子区', value: 120},
+                        {name: '寒亭区', value: 150},
+                        {name: '潍城区', value: 200},
+                        {name: '青州市', value: 50},
+                        {name: '诸城市', value: 20},
+                        {name: '寿光市', value: 10},
+                        {name: '安丘市', value: 5},
+                        {name: '高密市', value: 8},
+                        {name: '昌邑市', value: 2},
+                        {name: '临朐县', value: 3},
+                        {name: '昌乐县', value: 2}
+                    ];
+
+                    var mapOption = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{b}<br/>标签人群数量: {c} 人'
+                        },
+                        visualMap: {
+                            min: 0,
+                            max: 400,
+                            text: ['多', '少'],
+                            realtime: false,
+                            calculable: true,
+                            inRange: {
+                                color: ['#e0f2fe', '#3b82f6']
+                            },
+                            left: '2%',
+                            bottom: '5%'
+                        },
+                        series: [
+                            {
+                                name: '人群分布',
+                                type: 'map',
+                                mapType: '潍坊',
+                                roam: true,
+                                label: {
+                                    show: true,
+                                    color: '#374151',
+                                    fontSize: 10
+                                },
+                                itemStyle: {
+                                    borderColor: '#fff',
+                                    borderWidth: 1,
+                                    areaColor: '#f3f4f6'
+                                },
+                                emphasis: {
+                                    label: { show: true },
+                                    itemStyle: { areaColor: '#f59e0b' }
+                                },
+                                data: mapData
+                            }
+                        ]
+                    };
+                    mapInstance.setOption(mapOption);
+                })
+                .catch(error => {
+                    console.error('地图数据加载失败:', error);
+                    mapInstance.hideLoading();
+                });
+        }
+
+        window.addEventListener('resize', function() {
+            if (mapInstance) {
+                mapInstance.resize();
+            }
+        });
+
+        function toggleTags() {
+            const tagList = document.getElementById('tagList');
+            const btn = document.getElementById('toggleTagListBtn');
+            const span = btn.querySelector('span');
+            const icon = btn.querySelector('i');
+            
+            if (tagList.classList.contains('max-h-[92px]')) {
+                // Expand (Assuming 1000px is enough for all tags, or remove max-h)
+                tagList.classList.remove('max-h-[92px]');
+                tagList.classList.add('max-h-[500px]'); // Allow expanding up to 500px smoothly
+                span.innerText = '收起标签';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                // Collapse
+                tagList.classList.remove('max-h-[500px]');
+                tagList.classList.add('max-h-[92px]');
+                span.innerText = '展开更多标签';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+    </script>
+    <script src="admin_sidebar_logic.js"></script>
+</body>
+</html>

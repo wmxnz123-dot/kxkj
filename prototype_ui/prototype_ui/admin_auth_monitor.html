@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异常监控 - 一人一档后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar placeholder -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col h-full shrink-0">
+    <div class="h-16 flex items-center px-6 border-b border-gray-800 shrink-0">
+        <i class="fa-solid fa-cubes text-blue-500 text-2xl mr-3"></i>
+        <span class="text-lg font-bold tracking-wider">一人一档后台</span>
+    </div>
+    <div class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1" id="sidebar-menu">
+            <!-- 工作台 -->
+            <li>
+                <a href="admin_workbench.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-desktop w-6"></i> <span class="ml-3">智能工作台</span>
+                </a>
+            </li>
+            <!-- 数据检索管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-magnifying-glass w-6"></i> <span class="ml-3">数据检索管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+
+                    <li><a href="admin_dashboard.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据检索</a></li>
+                    <li><a href="admin_dashboard_results.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">组合检索</a></li>
+                    <li><a href="admin_tag_search.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">标签检索</a></li>
+                    <li><a href="admin_data_map.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数图分析</a></li>
+                </ul>
+            </li>
+            <!-- 认领数据管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-hand-holding-hand w-6"></i> <span class="ml-3">认领数据管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_catalog_config.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">目录管理</a></li>
+                    <li><a href="admin_corrections.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">数据纠错处置</a></li>
+                </ul>
+            </li>
+            <!-- 自有数据管理 -->
+            <li>
+                <a href="admin_own_data_catalog.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-folder-open w-6"></i> <span class="ml-3">自有数据管理</span>
+                </a>
+            </li>
+            <!-- 授权管理 -->
+            <li>
+                <div class="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition cursor-pointer" onclick="toggleMenu(this)">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-shield-halved w-6"></i> <span class="ml-3">授权管理</span>
+                    </div>
+                    <i class="fa-solid fa-angle-down text-xs transition-transform duration-200"></i>
+                </div>
+                <ul class="pl-14 py-2 space-y-3 text-sm hidden bg-gray-800/50">
+                    <li><a href="admin_auth_templates.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">规则配置</a></li>
+                    <li><a href="admin_auth_monitor.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">异常监控</a></li>
+                    <li><a href="admin_auth_blockchain.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">可信存证</a></li>
+                    <li><a href="admin_auth_records.html" class="text-gray-400 hover:text-white transition relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-2 before:border-2 before:border-gray-500 before:rounded-full">授权记录</a></li>
+                </ul>
+            </li>
+            <!-- 数据服务管理 -->
+            <li>
+                <a href="admin_services_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-layer-group w-6"></i> <span class="ml-3">数据服务管理</span>
+                </a>
+            </li>
+            <!-- 仪表盘配置 -->
+                <li>
+                    <a href="admin_profile_dashboard_config.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <i class="fa-solid fa-chart-pie w-6"></i> <span class="ml-3">仪表盘配置</span>
+                    </a>
+                </li>
+            <!-- 监管统计 (Hidden) -->
+                <li class="hidden">
+                    <a href="admin_monitor_stats.html" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i class="fa-solid fa-chart-line w-6"></i> <span class="ml-3">监管统计</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Topbar -->
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 shrink-0">
+            <div class="flex items-center text-gray-500">
+                <i class="fa-solid fa-bars cursor-pointer hover:text-gray-800 mr-4"></i>
+                <span class="text-sm">授权管理 <span class="mx-2">/</span> <span class="text-gray-800 font-medium">异常监控</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="./index.html" class="text-sm px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50">原型目录</a>
+                <div class="flex items-center cursor-pointer ml-4 border-l border-gray-200 pl-4">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-2">管</div>
+                    <span class="text-sm font-medium">超级管理员</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <!-- Warning Banner -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded shadow-sm">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-xl mr-3"></i>
+                    <div>
+                        <h3 class="text-red-800 font-bold text-sm">今日发现 2 起异常调用</h3>
+                        <p class="text-red-600 text-xs mt-1">请尽快核实调用方合法性并采取熔断措施。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Charts -->
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4 border-l-4 border-red-500 pl-2">近 24 小时异常调用趋势</h3>
+                    <div id="errorTrendChart" style="width: 100%; height: 250px;"></div>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4 border-l-4 border-orange-500 pl-2">异常类型分布</h3>
+                    <div id="errorTypeChart" style="width: 100%; height: 250px;"></div>
+                </div>
+            </div>
+
+            <!-- Filter -->
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6 flex items-center justify-between">
+                <div class="flex space-x-4">
+                    <input type="text" placeholder="输入调用方名称/应用名称" class="border border-gray-300 rounded px-3 py-2 text-sm w-64 focus:outline-none focus:border-blue-500">
+                    <select class="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <option>所有异常类型</option>
+                        <option>越权访问</option>
+                        <option>高频调用</option>
+                        <option>IP 异常</option>
+                    </select>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition">查询</button>
+                </div>
+                <button class="border border-gray-300 text-gray-600 px-4 py-2 rounded text-sm hover:bg-gray-50 transition"><i class="fa-solid fa-download mr-1"></i>导出报告</button>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-sm border-b border-gray-200">
+                                <th class="p-4 font-medium">告警时间</th>
+                                <th class="p-4 font-medium">调用方/应用</th>
+                                <th class="p-4 font-medium">异常类型</th>
+                                <th class="p-4 font-medium">异常描述</th>
+                                <th class="p-4 font-medium">处理状态</th>
+                                <th class="p-4 font-medium">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 text-gray-600">2025-10-25 14:30:22</td>
+                                <td class="p-4 font-medium text-gray-800">
+                                    XX小额贷款公司<br>
+                                    <span class="text-xs text-gray-400 font-normal">AppID: xd_88291a</span>
+                                </td>
+                                <td class="p-4"><span class="text-red-600 bg-red-50 px-2 py-1 rounded text-xs border border-red-100">越权访问</span></td>
+                                <td class="p-4 text-gray-600">尝试访问未授权的“医疗就诊记录”目录</td>
+                                <td class="p-4"><span class="text-red-500 font-medium">待处理</span></td>
+                                <td class="p-4 space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-800">阻断</button>
+                                    <button class="text-gray-500 hover:text-gray-800">忽略</button>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 text-gray-600">2025-10-25 11:15:05</td>
+                                <td class="p-4 font-medium text-gray-800">
+                                    市人力资源中心<br>
+                                    <span class="text-xs text-gray-400 font-normal">AppID: hr_gov_01</span>
+                                </td>
+                                <td class="p-4"><span class="text-orange-600 bg-orange-50 px-2 py-1 rounded text-xs border border-orange-100">高频调用</span></td>
+                                <td class="p-4 text-gray-600">单 IP 并发请求超过阈值 (500qps)</td>
+                                <td class="p-4"><span class="text-green-500 font-medium">已自动限流</span></td>
+                                <td class="p-4 space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-800">查看详情</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+<script src="admin_sidebar_logic.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Trend Chart
+        var trendChart = echarts.init(document.getElementById('errorTrendChart'));
+        var trendOption = {
+            tooltip: { trigger: 'axis' },
+            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00']
+            },
+            yAxis: { type: 'value' },
+            series: [{
+                name: '异常次数',
+                type: 'line',
+                smooth: true,
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: 'rgba(239, 68, 68, 0.3)' },
+                        { offset: 1, color: 'rgba(239, 68, 68, 0)' }
+                    ])
+                },
+                lineStyle: { color: '#ef4444', width: 2 },
+                itemStyle: { color: '#ef4444' },
+                data: [5, 2, 12, 8, 15, 6, 2]
+            }]
+        };
+        trendChart.setOption(trendOption);
+
+        // Initialize Type Chart
+        var typeChart = echarts.init(document.getElementById('errorTypeChart'));
+        var typeOption = {
+            tooltip: { trigger: 'item' },
+            legend: { top: 'bottom' },
+            series: [
+                {
+                    name: '异常类型',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: { show: false, position: 'center' },
+                    emphasis: {
+                        label: { show: true, fontSize: '14', fontWeight: 'bold' }
+                    },
+                    labelLine: { show: false },
+                    data: [
+                        { value: 1048, name: '越权访问', itemStyle: { color: '#ef4444' } },
+                        { value: 735, name: '高频调用', itemStyle: { color: '#f97316' } },
+                        { value: 580, name: 'IP 异常', itemStyle: { color: '#eab308' } },
+                        { value: 300, name: '其他', itemStyle: { color: '#94a3b8' } }
+                    ]
+                }
+            ]
+        };
+        typeChart.setOption(typeOption);
+
+        window.addEventListener('resize', function() {
+            trendChart.resize();
+            typeChart.resize();
+        });
+    });
+</script>
+</body>
+</html>

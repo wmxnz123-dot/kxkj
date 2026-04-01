@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能助理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f4f6; }
+        .mobile-view { max-width: 390px; margin: 0 auto; background-color: #f8fafc; min-height: 100vh; position: relative; display: flex; flex-direction: column; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .chat-container { flex: 1; overflow-y: auto; padding-bottom: 80px; }
+        .typing-indicator span {
+            display: inline-block;
+            width: 4px; height: 4px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+<div class="mobile-view">
+    <!-- Topbar -->
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+        <a href="javascript:history.back()" class="text-gray-600 w-8 h-8 flex items-center justify-center -ml-2">
+            <i class="fa-solid fa-angle-left text-xl"></i>
+        </a>
+        <div class="flex flex-col items-center">
+            <h1 class="text-base font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-robot text-blue-600 mr-2"></i>空间 AI 助理
+            </h1>
+            <span class="text-[10px] text-green-500 bg-green-50 px-1.5 py-0.5 rounded-full mt-0.5"><i class="fa-solid fa-circle text-[6px] mr-1"></i>基于私有知识库运行</span>
+        </div>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container p-4 space-y-4" id="chatBox">
+        <!-- AI Welcome Message -->
+        <div class="flex items-start">
+            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0 mr-2 mt-1 border border-blue-200">
+                <i class="fa-solid fa-robot text-sm"></i>
+            </div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 text-sm text-gray-700 max-w-[85%] leading-relaxed">
+                你好，张三！我是你的个人专属数据空间 AI 助理。我已经学习了你空间内的社保、学历、电子证照等所有授权数据。
+                <br><br>你可以这样问我：
+                <div class="mt-2 space-y-2">
+                    <button class="text-left w-full bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-100 transition" onclick="fillInput('提取我的学历和工作经历，帮我生成一份求职简历PDF')">
+                        "提取我的学历和工作经历，帮我生成一份求职简历PDF"
+                    </button>
+                    <button class="text-left w-full bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-100 transition" onclick="fillInput('我最近的体检报告各项指标正常吗？')">
+                        "我最近的体检报告各项指标正常吗？"
+                    </button>
+                    <button class="text-left w-full bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-100 transition" onclick="fillInput('如何撤销对市公积金中心的授权？')">
+                        "如何撤销对市公积金中心的授权？"
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Demonstration of a user asking a question (simulated after click) -->
+        <div id="simulatedChat" class="hidden space-y-4">
+            <!-- User Message -->
+            <div class="flex items-start justify-end">
+                <div class="bg-blue-600 p-3 rounded-2xl rounded-tr-sm shadow-sm text-sm text-white max-w-[85%] leading-relaxed">
+                    提取我的学历和工作经历，帮我生成一份求职简历PDF
+                </div>
+                <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 flex-shrink-0 ml-2 mt-1">
+                    <span class="text-xs font-bold">张</span>
+                </div>
+            </div>
+
+            <!-- AI Typing Indicator -->
+            <div class="flex items-start" id="typingIndicator">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0 mr-2 mt-1 border border-blue-200">
+                    <i class="fa-solid fa-robot text-sm"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 text-sm text-gray-700">
+                    <div class="typing-indicator flex items-center h-4">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Response -->
+            <div class="flex items-start hidden" id="aiResponse">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0 mr-2 mt-1 border border-blue-200">
+                    <i class="fa-solid fa-robot text-sm"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 text-sm text-gray-700 max-w-[85%] leading-relaxed">
+                    <p class="mb-2"><i class="fa-solid fa-check-circle text-green-500 mr-1"></i> 已成功从您的私有知识库中提取以下数据：</p>
+                    <ul class="list-disc pl-4 text-xs text-gray-600 mb-3 space-y-1">
+                        <li>基础身份：张三，28岁，中共党员</li>
+                        <li>学历数据：山东大学，计算机科学与技术，本科（来源于政务库）</li>
+                        <li>经历数据：前端开发工程师，3年经验（来源于您的自有数据上传）</li>
+                    </ul>
+                    <p class="mb-3">我已经为您排版生成了专业的求职简历：</p>
+                    
+                    <div class="border border-gray-200 rounded-lg p-3 bg-gray-50 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-file-pdf text-red-500 text-2xl mr-3"></i>
+                            <div>
+                                <div class="font-medium text-gray-800 text-xs">张三_前端开发_求职简历.pdf</div>
+                                <div class="text-[10px] text-gray-400">142 KB · AI 自动生成</div>
+                            </div>
+                        </div>
+                        <button class="bg-white border border-gray-300 text-gray-600 px-3 py-1 rounded text-xs hover:bg-gray-100" onclick="alert('PDF下载成功')">下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="fixed bottom-0 w-full max-w-[390px] bg-white border-t border-gray-100 p-3 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <div class="flex items-end bg-gray-50 rounded-2xl border border-gray-200 px-3 py-2">
+            <button class="text-gray-400 hover:text-blue-500 p-1 mr-1">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+            <textarea id="chatInput" rows="1" placeholder="输入你想了解的个人数据..." class="flex-1 bg-transparent text-sm focus:outline-none resize-none max-h-24 min-h-[24px] py-1 text-gray-700" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea>
+            <button class="text-white bg-blue-600 hover:bg-blue-700 rounded-full w-8 h-8 flex items-center justify-center ml-2 flex-shrink-0 transition" onclick="simulateSend()">
+                <i class="fa-solid fa-paper-plane text-xs relative -left-[1px]"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fillInput(text) {
+        document.getElementById('chatInput').value = text;
+    }
+
+    function simulateSend() {
+        const input = document.getElementById('chatInput');
+        if(!input.value.trim()) return;
+        
+        input.value = '';
+        input.style.height = '24px';
+        
+        const simChat = document.getElementById('simulatedChat');
+        const typing = document.getElementById('typingIndicator');
+        const response = document.getElementById('aiResponse');
+        
+        simChat.classList.remove('hidden');
+        typing.classList.remove('hidden');
+        response.classList.add('hidden');
+        
+        // Scroll to bottom
+        window.scrollTo(0, document.body.scrollHeight);
+        
+        // Simulate network delay
+        setTimeout(() => {
+            typing.classList.add('hidden');
+            response.classList.remove('hidden');
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 1500);
+    }
+</script>
+</body>
+</html>
